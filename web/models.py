@@ -27,7 +27,7 @@ class Categoria(models.Model):
         return self.nombreCategoria
     
 class Producto(models.Model):
-    id_producto     = models.AutoField(max_length=100, primary_key=True)
+    id_producto     = models.CharField(max_length=100, primary_key=True)
     nombre          = models.CharField(max_length=100)
     description     = models.CharField(max_length=500)
     precio          = models.IntegerField()
@@ -36,9 +36,6 @@ class Producto(models.Model):
     categoria       = models.ForeignKey(Categoria, on_delete=models.CASCADE, verbose_name="Categoria")
     
     def __str__(self):
-        return self.get_code_id
-
-    def get_code_id(self):
-        return f"{self.id_producto} - {self.nombre}"
+        return self.nombre
 
 
