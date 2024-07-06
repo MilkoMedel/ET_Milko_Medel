@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.shortcuts import render, redirect 
+from django.shortcuts import get_object_or_404, render,redirect 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
@@ -100,10 +100,10 @@ def producto_add(request):
 
 @staff_member_required
 def producto_mod(request, id):
-    product = Producto.objects.get(id=id)
+    product = get_object_or_404(Producto, id_producto=id)
     ctx = {
         'form': ProductosForm(instance=product),
-        'id': id,
+        'id_producto': id,
     }
     if request.method == "POST":
         form = ProductosForm(request.POST, request.FILES, instance=product)
@@ -114,6 +114,6 @@ def producto_mod(request, id):
 
 @staff_member_required
 def producto_del(request, id):
-    product = Producto.objects.get(id=id)
+    product = get_object_or_404(Producto, id_producto=id)
     product.delete()
     return redirect('crud')
