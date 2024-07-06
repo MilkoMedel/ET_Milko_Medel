@@ -22,7 +22,11 @@ def nosotros(request):
 
 @login_required
 def galeria(request):
-    return render(request,'galeria.html')
+    products = Producto.objects.all()
+    ctx = {
+        'products': products 
+    }
+    return render(request, 'galeria.html', ctx)
 
 def form(request):
     data = {
