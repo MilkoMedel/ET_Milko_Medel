@@ -1,0 +1,217 @@
+* {
+    margin: 0;
+    padding: 0;
+    width: auto;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+body, html{
+    background: linear-gradient(135deg,#71b7e6,#9b59b6);
+}
+
+.container {
+    max-width: 3200px;
+    margin:auto;
+}
+
+.header {
+    background-image: linear-gradient(
+            rgba(0, 0, 0, 0.7),
+            rgba(0, 0, 0, 0.7)),
+        url(https://images.prismic.io/simpliroute/85eca361-d606-4cb9-9bb3-0bc359e09961_planograma+de+abarrotes.jpg?auto=compress%2Cformat&rect=0%2C121%2C1920%2C836&w=1920&fit=max&q=100);
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 10vh;
+    display: flex;
+    align-items: center;
+}
+
+.menu {
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.menu-logo {
+    width: 80px;
+}
+
+.menu .navbar ul li {
+    position: relative;
+    float: left;
+    text-transform: uppercase;
+}
+
+.menu .navbar ul li a {
+    font-size: 10px;
+    padding: 20px;
+    color: #ffFdfc;
+    display: block;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.menu .navbar ul li a:hover {
+    color: #ce967b;
+}
+
+#menu {
+    display: none;
+}
+
+.menu-icono {
+    width: 50px;
+    padding: 0 10px;
+}
+
+.menu label {
+    cursor: pointer;
+    display: none;
+}
+
+.producto {
+    max-width: 600px; /* Ancho máximo del carrusel */
+    margin: 50px auto; /* Centrar horizontalmente */
+    padding: 20px; /* Añadir espacio alrededor del carrusel */
+    background-color: #323337; /* Color de fondo */
+    border-radius: 20px; /* Borde redondeado */
+    box-shadow: 0 20px 20px 0;
+}
+
+.carousel-item img {
+    max-width: 100%; /* Imágenes del carrusel ajustadas */
+    height: auto;
+}
+
+.btn-1 {
+    display: inline-block;
+    padding: 11px 35px;
+    background-color: #ce967b;
+    color: #f9fafc;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.btn-1:hover {
+    background-color: #ebad8d;
+}
+
+.footer {
+    padding: 15px 0;
+    background-color: #2a2a2a;
+    color: #fff;
+}
+
+.container-content{
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer h3 {
+    font-size: 20px;
+    color: #FFE333;
+    margin-bottom:15px;
+
+}
+
+.derechos{
+    text-align: center;
+} 
+
+.container-content-aside {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn {
+    background-color: rgba(0,0,0,0.8);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+table {
+    width: 100%;
+    border: 1px solid #323337;
+}
+
+table, th, td {
+    border: 1px solid #fff;
+}
+
+thead {
+    background-color: #007bff;
+    color: white;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #fff;
+}
+
+.convertidor {
+    margin-top: 30px;
+    color: #2a2a2a;
+}
+
+#valorDolar {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+@media (max-width: 800px){
+    .menu{
+        padding: initial;
+    }
+    .menu label{
+        display: initial;
+    }
+    .menu .navbar{
+        position: absolute; 
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: #323337;
+        display: none;
+        z-index: 1000; /* Ajuste del z-index para que esté encima del slider */
+    }
+    .menu .navbar ul li {
+        width: 100%;
+    }
+    #menu:checked ~ .navbar {
+        display: initial;
+        text-align: center;
+        text-transform: uppercase;
+    }
+    .header {
+        min-height: 0vh;
+    }
+    .header-content {
+        padding: 100px 30px;
+    }
+    .header-content p {
+        padding: 0;
+    }
+    .producto{
+        display: flexbox;
+        justify-items: center;
+        max-width: 70%;
+        max-height: 20%;
+    }
+}

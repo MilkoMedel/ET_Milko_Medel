@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de registro</title>
+    <link rel="stylesheet" href="{% static 'css/styles_main.css' %}">
+    <!-- este script me permite utilizar los métodos de jQuery para validar -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- este link me permite implementar bootstrap para los colores para validar los campos -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="title">Formulario de registro</div><br>
+        <form id="form" method="post">
+            {% csrf_token %}
+            <div class="contenido">
+                {% load crispy_forms_tags %}
+                <div class="container">
+                    <div class="">
+                        <div class="">
+                            <div class="">
+                                <div class="">
+                                    <h2>Registro de datos</h2>
+                                    <form action="#" method="post" id="registration-form">
+                                        {% csrf_token %}
+                                        {{ form | crispy }}
+                                        <p> La fecha se ingresa como AÑO-MES-DIA</p>
+                                        <p>Ya tienes cuenta? <a href="{% url 'login' %}" style="color: #F44A36; font-size: medium;">Click aquí</a></p>
+                                        <input type="submit" value="Ingresar" class="btn btn-success" style="float:right;">
+                                        <hr class="separador2">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+        </form>
+        <a href="{% url 'login' %}">Volver al Login</a>
+    </div>
+    <script src="{% static 'js/validaciones.js' %}"></script>
+</body>
+</html>

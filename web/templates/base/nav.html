@@ -1,0 +1,54 @@
+{% load static %}
+<header class="header">
+    <div class="menu container">
+        <img class="menu-logo" src="{% static 'img/imagenlogo.png' %}" alt="menu logo">
+        <input type="checkbox" id="menu">
+        <label for="menu">
+            <img src="{% static 'img/menu.png' %}" class="menu-icono" alt="">
+        </label>
+        <nav class="navbar">
+            <ul>
+                <!-- apartado para ver pedidos -->
+                
+                <!-- apartado para el admin boton -->
+                {% if user.is_staff %} <!-- create superuser-->
+                {% url 'crud' as crud_url %}
+                <li class="nav-item">
+                    <a
+                    class="nav-link {% if request.path == crud_url %}active{% endif %}"
+                    href="{{ crud_url }}">Administrar Producto</a>
+                </li>
+                {% endif %} 
+                {% url 'index' as index_url %}
+                <li><a class="nav-link {% if request.path == index_url %}active{% endif %}"
+                    href="{{ index_url }}">Inicio</a>
+                </li>
+                {% if user.is_authenticated %} 
+                {% url 'nosotros' as nosotros_url %}
+                <li><a class="nav-link {% if request.path == nosotros_url %}active{% endif %}"
+                    href="{{ nosotros_url }}">Nosotros</a>
+                </li>
+                {% url 'galeria' as galeria_url %}
+                <li><a class="nav-link {% if request.path == nosotros_url %}active{% endif %}"
+                    href="{{galeria_url}}">Galeria</a>
+                </li>
+                <a class="dropdown-item" href="#"
+                    ><form
+                    id="logout-form"
+                    method="post"
+                    action="{% url 'logout' %}"
+                    style="color: white; font-size: medium; text-align: center">
+                    {% csrf_token %}
+                    <a class="nav-link" onclick="this.closest('form').submit();">Cerrar sesión</a>
+                    </form>
+                </a>
+                {% else %}
+                {% url 'login' as login_url %}    
+                <li><a class="nav-link {% if request.path == login_url %}active{% endif %}"
+                    href="{{login_url}}">Login in</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</header>

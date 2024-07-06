@@ -1,0 +1,36 @@
+{% load static %}
+<footer class="footer">
+    <section class="container-content">
+        <div class="content-pharagraph">
+            <div class="nosotros">
+                <h3>Nuestra Historia</h3>
+                <ul>
+                    <p>En nuestro almacén de abarrotes y congelados, ofrecemos una amplia gama de productos frescos y de alta calidad para satisfacer las necesidades de nuestros clientes. Desde frutas y verduras hasta carnes y pescados congelados, nuestro objetivo es proporcionar productos frescos y convenientes para facilitar la vida diaria de nuestros clientes.</p>
+                    <p>Con un enfoque en la frescura, la variedad y el servicio al cliente excepcional, nos esforzamos por ser el destino preferido para las compras de abarrotes y congelados de calidad.</p>
+                    <li>
+                        {% url 'nosotros' as nosotros_url %}
+                        <a id="nav-link {% if request.path == nosotros_url %}active{% endif %}"
+                        href="{{nosotros_url}}" class="btn-1">Informacion</a></li>
+                </ul>
+            </div>
+            <div class="link">
+                <h3>Galeria</h3>
+                <ul>
+                    <p>Ve nuestras fotos sobre nuestros productos.</p>
+                    <li>
+                        {% url 'galeria' as galeria_url %}
+                        <a id="nav-link {% if request.path == galeria_url %}active{% endif %}"
+                        href="{{galeria_url}}" class="btn-1">Informacion</a></li>
+                </ul>
+            </div>
+            <div class="link">
+                <h3>002D Milko Medel</h3>
+                <img src="{% static 'img/face.png' %}" alt="facebook." width="50px" height="50px" style="padding-left: 20px;">
+                <img src="{% static 'img/insta.png' %}" alt="Instagram." width="50px" height="50px" style="padding-left: 20px;">
+                <ul>
+                    <li><p class="derechos">&copy;Copyrigth Derechos reservados.</p></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</footer>

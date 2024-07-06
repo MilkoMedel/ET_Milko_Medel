@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nosotros</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
+    rel="stylesheet" 
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
+    crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/styles_nosotros.css' %}">
+</head>
+<body>
+    {% include 'base/nav.html'%}
+    <section class="card-container">
+        <div class="card">
+            <h2>Objetivo del Sitio Web:</h2>
+            <p>El objetivo principal del sitio web es proporcionar a los clientes una plataforma en línea donde puedan explorar y comprar una amplia gama de abarrotes y productos congelados desde la comodidad de sus hogares.</p>
+        </div>
+        <div class="card">
+            <h2>Descripción de la Empresa:</h2>
+            <p>Nuestro almacén de abarrotes y productos congelados es un establecimiento dedicado a ofrecer a nuestros clientes una amplia selección de productos alimenticios de buena calidad. Nos esforzamos por satisfacer las necesidades de nuestros clientes proporcionando productos frescos, congelados y enlatados, así como una variedad de artículos esenciales para el hogar.</p>
+        </div>
+        <div class="card">
+            <h2>Misión:</h2>
+            <p>Nuestra misión es ser el destino preferido para la compra de abarrotes y productos congelados al ofrecer una combinación de calidad, variedad y conveniencia. Nos comprometemos a proporcionar un servicio excepcional a nuestros clientes, manteniendo altos estándares de integridad y ética comercial.</p>
+        </div>
+        <div class="card">
+            <h2>Visión:</h2>
+            <p>Nuestra visión es convertirnos en el líder del mercado en la venta minorista de abarrotes y productos congelados, tanto en nuestra área local como en línea. Buscamos expandir nuestra presencia y mantenernos a la vanguardia de la innovación en el sector minorista, brindando a nuestros clientes una experiencia de compra inigualable.</p>
+        </div>
+        <div class="card">
+            <h2>Valores Principales:</h2>
+            <ul>
+                <li>
+                    <h3>Calidad:</h3>
+                        <p>Nos comprometemos a ofrecer productos de la más alta calidad a nuestros clientes.</p>
+                    <h3>Variedad:</h3>
+                        <p>Buscamos ofrecer una amplia gama de productos para satisfacer las diversas necesidades de nuestros clientes.</p> 
+                    <h3>Conveniencia:</h3> 
+                        <p>Nos esforzamos por hacer que la experiencia de compra sea conveniente y sin complicaciones para nuestros clientes, ya sea en línea o en la tienda física.</p>
+                    <h3>Integridad:</h3>
+                        <p>Actuamos con integridad en todas nuestras interacciones comerciales y nos comprometemos a mantener altos estándares éticos.</p>
+                </li>
+            </ul>
+        </div>
+        <iframe src="https://www.youtube.com/embed/YZi5vam33ow?si=18xh5jr_ftR4bGcZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" class="card-v" allowfullscreen></iframe>
+    </section>
+    {% include 'base/footer.html'%}
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+</body>
+</html>

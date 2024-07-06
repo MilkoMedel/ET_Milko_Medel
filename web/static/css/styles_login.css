@@ -1,0 +1,134 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    height: 100%;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg,#71b7e6,#9b59b6);
+    font-family:sans-serif;
+}
+
+.form-box{
+    max-width: 500px;
+    width: 100%;
+    background: rgba(0,0,0,0.8);
+    margin: 100px auto;
+    padding: 50px 0;
+    color: #fff;
+    box-shadow:  0 0 20px 2px rgba(0,0,0,0.5);
+    border-radius: 5%;
+}
+
+h1{
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.input-box{
+    margin: 31px auto;
+    width: 80%;
+    border-bottom: 1px solid #fff;
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+
+.input-box input{
+    width: 80%;
+    border: none;
+    outline:none;
+    background: transparent;   
+    color:#fff;
+}
+::placeholder{
+    color: #ccc;
+}
+
+.fa-solid{
+    margin-right: 5px;
+}
+
+.eye{
+    position: absolute;
+    padding: 5px 0 0 10px ;
+}
+
+#hide1{
+    display: none;
+    
+}
+
+.form-box .button{
+    height: 45px;
+    margin: 45px 0 ;
+    display: flex;
+    justify-content: center;
+}
+
+.form-box .button input{
+    height: 100%;
+    width: 80%;
+    outline: none;
+    color: #fff;
+    border: none;
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    background: linear-gradient(135deg,#9b59b6,#71b7e6);
+    transition: all 0.3s ease;
+}
+
+.form-box .button input:hover{
+    background: linear-gradient(135deg,#71b7e6,#9b59b6);
+}
+
+.error-message{
+    color:#dc134c;
+}
+
+#detail{
+    justify-content: center;
+    display: flex;
+}
+#detail #registro{
+    padding-right: 10px;
+}
+@media(max-width: 584px){
+    .form-box{
+        max-width: 100%;
+        margin: 10px auto;
+    }
+    .form-box .input-box .fa-solid{
+        margin-left: 20px;
+        margin-top: 6px;
+    }
+    .input-box{
+        border-bottom: none;
+        padding: 0%;
+    }
+    .form-box .input-box{
+        margin-bottom: 15px;
+        width: 100% ;
+    }
+    .form-box .input-box{
+        margin-left: 5px;
+    }
+    .form-box .input-box input{
+        margin-top: 5px;
+        width: 70%;
+    }
+    .form-box form input{
+        max-height: 300px;
+        overflow-y: scroll;
+    }
+    #detail {
+        padding: 15px;
+    }
+    .form-box::-webkit-scrollbar{
+        width: 0;
+    }
+}
