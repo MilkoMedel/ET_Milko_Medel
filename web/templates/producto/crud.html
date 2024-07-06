@@ -19,7 +19,7 @@
         <h1 class="text-white">Manejo de Productos</h1>
         <div class="row my-5">
             <div class="col">
-                <a class="btn btn-success" href="{% url 'producto_add' %}" style="font-size: 1rem; background-color: #F44A36; box-shadow: none; border-color: #F44A36;">
+                <a class="btn btn-success" href="{% url 'producto_add' %}" style="font-size: 1rem; background-color: #f8cf16; box-shadow: none; border-color: #F44A36;">
                     <i class="fa fa-plus" aria-hidden="true"></i>Añadir nuevo producto
                 </a>
             </div>
@@ -52,12 +52,12 @@
                                 <img style="max-width: 100px;" src="{{ productos.imagen.url }}" alt="{{ productos.nombre }}">
                             </td>
                             <td>
-                                <a href="{% url 'producto_mod' productos.id_producto %}" class="btn btn-success" style="font-size: 1rem; background-color: #F44A36; box-shadow: none; border-color: #F44A36;">
+                                <a href="{% url 'producto_mod' productos.id_producto %}" class="btn btn-success" style="font-size: 1rem; background-color: #4FA1FF; box-shadow: none; border-color: #F44A36;">
                                     <i class="fas fa-edit"></i>Editar
                                 </a>
                             </td>
                             <td>
-                                <a href="{% url 'producto_del' productos.id_producto %}" class="btn btn-danger" style="font-size: 1rem; background-color: #FAB451; box-shadow: none; border-color: #FAB451;">
+                                <a href="{% url 'producto_del' productos.id_producto %}" class="btn btn-danger" style="font-size: 1rem; background-color: #F44A36; box-shadow: none; border-color: #FAB451;">
                                     <i class="fa fa-trash" aria-hidden="true"></i>Eliminar
                                 </a>
                             </td>
