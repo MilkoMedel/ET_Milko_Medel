@@ -5,8 +5,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.core.paginator import Paginator
 from django.contrib import messages
+from django.db.models import Q
 from .forms import SignUpForm, CustomAuthenticationForm, ProductosForm
-from .models import Registro_cliente, Producto
+from .models import Registro_cliente, Producto,Categoria
 
 # Create your views here.
 
@@ -78,15 +79,30 @@ def crud(request):
     }
     return render(request, 'producto/crud.html', ctx)         # cambia a la lista de productos para mod,add,del
 
-def products(request): # de la tienda
-    products = Producto.objects.all().order_by('id')
-    paginator = Paginator(products, 9)
+def producto(request):
+    search_query = request.GET.get('search', '')
+    category_query = request.GET.get('category', '')
+
+    products = Producto.objects.all()
+
+    if search_query:
+        products = products.filter(Q(nombre__icontains=search_query) | Q(description__icontains=search_query))
+
+    if category_query:
+        products = products.filter(categoria__nombreCategoria=category_query)
+
+    paginator = Paginator(products, 8)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+
+    categorias = Categoria.objects.all()
+
     ctx = {
         'page_obj': page_obj,
+        'products': products,  # Pasa también los productos sin paginar
+        'categorias': categorias,
     }
-    return render(request, 'cart/shop.html', ctx)
+    return render(request, 'galeria.html', ctx)
 
 @staff_member_required
 def producto_add(request):
