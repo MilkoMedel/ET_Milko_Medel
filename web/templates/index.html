@@ -83,7 +83,27 @@
             </button>
         </div>
     </section>
-    
+    <aside class="container-content-aside">
+        <div class="content-pharagraph-aside">
+            <div class="api">
+                <button type="button" class="btn btn-secondary" id="consulta">Consultar ranking</button>
+                <table style="border: 1px solid; text-align: center">
+                    <thead>
+                        <tr>
+                            <td style="border: 1px solid;">nro</td>
+                            <td style="border: 1px solid;">Nombre</td>
+                            <td style="border: 1px solid;">Email</td>
+                        </tr>
+                    </thead>
+                    <tbody id="ranking" style="border: 1px solid;"></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="convertidor">
+            <button type="button" class="btn btn-secondary" id="consultaDolar">Valor del Dólar</button>
+            <p id="valorDolar"></p>
+        </div>
+    </aside>
     {% include 'base/footer.html' %}
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
