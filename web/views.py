@@ -1,15 +1,12 @@
-from django.contrib import messages
-from django.shortcuts import get_object_or_404, render,redirect 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-from django.contrib.auth.forms import AuthenticationForm
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.core.paginator import Paginator
-from web.forms import SignUpForm
-from web.models import Registro_cliente
-from .forms import ProductosForm
-from .models import Producto
+from django.contrib import messages
+from .forms import SignUpForm, CustomAuthenticationForm, ProductosForm
+from .models import Registro_cliente, Producto
 
 # Create your views here.
 
@@ -58,7 +55,7 @@ def form(request):
 
 def login_view(request):
     if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
+        form = CustomAuthenticationForm(request, data=request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
@@ -71,7 +68,7 @@ def login_view(request):
         else:
             return HttpResponse("Invalid form")
     else:
-        form = AuthenticationForm()
+        form = CustomAuthenticationForm()
     return render(request, 'login.html', {'form': form})    # inicia sesion.
 
 def crud(request):

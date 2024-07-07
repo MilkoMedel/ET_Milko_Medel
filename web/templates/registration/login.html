@@ -6,29 +6,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="{% static 'CSS/styles_login.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'CSS/styles_login.css' %}">
 </head>
 <body>
-    <div class="container">
-        <div class="">
-            <div class="">
-                <div class="">
-                    <div class="">
-                        <h2>Ingresa tus credenciales</h2>
-                        <form action="#" method="post">
-                            {% csrf_token %}
-                            {{ form|crispy }}
-                            <p>No tienes cuenta? <a class="nav-link" href="{% url 'form' %}" style="color: #F44A36; font-size: medium;">Click aquí</a></p>
-                            <p>Olvido su contraseña? <a class="nav-link" href="{% url 'password_reset' %}" style="color: #F44A36; font-size: medium;">Click aquí</a></p></p>
-                            <input type="submit" value="Ingresar" class="btn btn-success" style="float:right;">
-                            <hr class="separador1">
-                        </form>
-                    </div>
+    <div class="form-box">
+        <h1>Login</h1>
+        <div class="container">
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <input type="submit" value="Ingresar" class="btn btn-success">
+                <hr class="separador1">
+                <div id="detail">
+                    <p>No tienes cuenta? 
+                        <a class="detail-btn" href="{% url 'form' %}">Registrate</a>
+                    </p>
+                    <p>Olvidaste tu contraseña? 
+                        <a class="detail-btn" href="{% url 'password_reset' %}">Recuperar contraseña.</a>
+                    </p>
+                    <p>Volver   
+                        <a class="detail-btn" href="{% url 'index' %}">Inicio.</a>
+                    </p>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </body>
