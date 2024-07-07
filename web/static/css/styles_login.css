@@ -1,6 +1,4 @@
-/* static/CSS/styles_login.css */
 
-/* Reset de estilos y configuración general */
 * {
     margin: 0;
     padding: 0;
@@ -18,7 +16,7 @@ body {
 
 .form-box {
     width: 100%;
-    max-width: 400px;
+    max-width: 600px;
     margin: 50px auto; /* Centro verticalmente y margen automático a los lados */
     padding: 20px;
     border: 1px solid #ccc;
@@ -52,7 +50,6 @@ body {
 
 .form-box form input[type="submit"]:hover {
     background-color: #2567d9;
-    border: 2px solid #2567d9;
 }
 
 #detail {
@@ -62,6 +59,7 @@ body {
 
 #detail p {
     margin-bottom: 10px;
+    margin-top: 10px; /* Añade un margen superior para espaciar mejor los párrafos */
 }
 
 #detail a.detail-btn {
@@ -72,7 +70,7 @@ body {
     padding: 8px 16px;
     border-radius: 5px;
     transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-    margin: 10px;
+    margin: 10px 0; /* Cambia el margen a 10px verticalmente */
 }
 
 #detail a.detail-btn:hover {
