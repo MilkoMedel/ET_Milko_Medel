@@ -65,34 +65,69 @@
             </div>
         </div>
     </div>
-    <section class="galery container">
-        <!-- Card Template -->
-        {% if products %}
-            {% for producto in products %}
-            <div class="card" onclick="voltear(this)">
-                <div class="card-product">
-                    <div class="card-face front-face">
-                        <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
-                    </div>
-                    <div class="card-face back-face">
-                        <div class="contenedor-info">
-                            <h2>{{ producto.nombre }}</h2>
-                            <p>${{ producto.precio }}</p>
-                            <p>{{ producto.stock  }} en stock</p>
-                            <a class="btn-add-cart">Agregar al carrito</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <form action="{% url 'producto' %}" method="GET" class="form-inline mb-4">
+        <input type="text" name="search" class="form-control mr-2" placeholder="Buscar por nombre..." value="{{ request.GET.search }}">
+        <select name="category" class="form-control mr-2">
+            <option value="">Todas las categorías</option>
+            {% for categoria in categorias %}
+                <option value="{{ categoria.nombreCategoria }}" {% if request.GET.category == categoria.nombreCategoria %} selected {% endif %}>{{ categoria.nombreCategoria }}</option>
             {% endfor %}
-        {% endif %}
-    </section>
+        </select>
+        <button type="submit" class="btn btn-primary" style="background-color: #F44A36; box-shadow:none; border-color: #F44A36;">Buscar</button>
+    </form>
+
+    <div class="contenido">
+        <div class="container">
+            {% if page_obj %}
+                <div class="row">
+                    {% for producto in page_obj %}
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <section class="galery">
+                            <div class="card" onclick="voltear(this)">
+                                <div class="card-product">
+                                    <div class="card-face front-face">
+                                        <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+                                    </div>
+                                    <div class="card-face back-face">
+                                        <div class="contenedor-info">
+                                            <h2>{{ producto.nombre }}</h2>
+                                            <p>${{ producto.precio }}</p>
+                                            <p>{{ producto.stock }} en stock</p>
+                                            <p>
+                                                Disponibilidad:
+                                                {% if producto.stock > 1 %}
+                                                    <span class="text-success text-white">Quedan {{ producto.stock }} unidades</span>
+                                                {% elif producto.stock == 1 %}
+                                                    <span class="text-success">Queda {{ producto.stock }} unidad</span>
+                                                {% else %}
+                                                    <span class="text-danger">No quedan unidades</span>
+                                                {% endif %}
+                                            </p>
+                                            {% if producto.stock > 0 %}
+                                                <a class="btn-add-cart">Agregar al carrito</a>
+                                                <a class="btn btn-danger add-product" href="#">Añadir al carrito</a>
+                                            {% else %}
+                                                <a class="btn btn-outline-secondary add-product disabled" href="#">Fuera de stock</a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>Lo sentimos... Aún no se han agregado productos.</p>
+            {% endif %}
+        </div>
+    </div>
 
     {% include 'base/footer.html' %}
 
     <script>
         function voltear(card){
-            card.querySelector('.card-product').classList.toggle('is-flipped')
+            card.querySelector('.card-product').classList.toggle('is-flipped');
         }
     </script>
     <script src="{% static 'js/carrito.js' %}"></script>
