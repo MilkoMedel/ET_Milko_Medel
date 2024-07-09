@@ -9,6 +9,8 @@ urlpatterns = [
     path('galeria/',views.galeria,name='galeria'),
     path('login/',views.login_view,name='login'),
     path('form/',views.form,name='form'),
+    path('perfil/', views.perfil, name='perfil'),
+    path('mostrar_perfil', views.mostrar_perfil, name='mostrar_perfil'),
     
     # CRUD URLs
 

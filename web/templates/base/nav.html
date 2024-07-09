@@ -32,6 +32,10 @@
                 <li><a class="nav-link {% if request.path == nosotros_url %}active{% endif %}"
                     href="{{galeria_url}}">Galeria</a>
                 </li>
+                {% url 'mostrar_perfil' as mostrar_perfil_url %}
+                <li><a class="nav-link {% if request.path == nosotros_url %}active{% endif %}"
+                    href="{{mostrar_perfil_url}}">Perfil</a>
+                </li>
                 <a class="dropdown-item" href="#"
                     ><form
                     id="logout-form"

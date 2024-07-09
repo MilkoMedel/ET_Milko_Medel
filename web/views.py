@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.core.paginator import Paginator
 from django.contrib import messages
 from django.db.models import Q
-from .forms import SignUpForm, CustomAuthenticationForm, ProductosForm
+from .forms import SignUpForm, CustomAuthenticationForm, ProductosForm, UserProfileForm
 from .models import Registro_cliente, Producto,Categoria
 
 # Create your views here.
@@ -134,3 +134,24 @@ def producto_del(request, id):
     product = get_object_or_404(Producto, id_producto=id)
     product.delete()
     return redirect('crud')
+
+@login_required
+def perfil(request):
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            user = form.save()
+            registro_cliente = Registro_cliente.objects.get(user=user)
+            registro_cliente.fecha_nac = form.cleaned_data['fecha_nac']
+            registro_cliente.id_genero = form.cleaned_data['genero']
+            registro_cliente.cel = form.cleaned_data['cel']
+            registro_cliente.save()
+            return redirect('mostrar_perfil')
+    else:
+        form = UserProfileForm(instance=request.user)
+    return render(request, 'usuario/perfil.html', {'form': form})
+
+@login_required
+def mostrar_perfil(request):
+    user = request.user
+    return render(request, 'usuario/mostrar_perfil.html', {'user': user})

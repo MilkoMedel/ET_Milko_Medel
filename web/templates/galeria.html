@@ -92,7 +92,6 @@
                                         <div class="contenedor-info">
                                             <h2>{{ producto.nombre }}</h2>
                                             <p>${{ producto.precio }}</p>
-                                            <p>{{ producto.stock }} en stock</p>
                                             <p>
                                                 Disponibilidad:
                                                 {% if producto.stock > 1 %}
@@ -104,7 +103,6 @@
                                                 {% endif %}
                                             </p>
                                             {% if producto.stock > 0 %}
-                                                <a class="btn-add-cart">Agregar al carrito</a>
                                                 <a class="btn btn-danger add-product" href="#">Añadir al carrito</a>
                                             {% else %}
                                                 <a class="btn btn-outline-secondary add-product disabled" href="#">Fuera de stock</a>
