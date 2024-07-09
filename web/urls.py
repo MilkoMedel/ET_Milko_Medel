@@ -4,6 +4,7 @@ from django.contrib.auth import views as auth_views
 from . import views
 
 urlpatterns = [
+    # pagina
     path('', views.index, name='index'),
     path('nosotros/',views.nosotros,name='nosotros'),
     path('galeria/',views.galeria,name='galeria'),
@@ -20,7 +21,16 @@ urlpatterns = [
     path('producto/<int:id>/modificate/', views.producto_mod, name='producto_mod'),
     path('producto/<int:id>/delete/', views.producto_del, name='producto_del'),
 
-    # contrasena urls
+    # carrito URLs
+
+    path('carrito_prod/add/<id>', views.carrito_prod_add, name="carrito_prod_add"),
+    path('carrito_prod/substract/<id>', views.carrito_prod_substract, name="carrito_prod_substract"),
+    path('carrito_prod/delete/<id>', views.carrito_prod_delete, name="carrito_prod_delete"),
+    path('carrito_prod/clear', views.carrito_prod_clear, name="carrito_prod_clear"),
+    path('carrito_prod/open', views.carrito_prod_open, name="carrito_prod_open"),
+    path('carrito_prod/close', views.carrito_prod_close, name="carrito_prod_close"),
+
+    # restablecer contrasena urls
 
     path('accounts/password_reset/', 
         auth_views.PasswordResetView.as_view(template_name='registration/password_reset.html'), 

@@ -6,6 +6,10 @@ from django.http import HttpResponse
 from django.core.paginator import Paginator
 from django.contrib import messages
 from django.db.models import Q
+from django.urls import reverse
+
+from web.carrito_prod import Carrito_Prod
+from web.context_processor import get_page_number
 from .forms import SignUpForm, CustomAuthenticationForm, ProductosForm, UserProfileForm
 from .models import Registro_cliente, Producto,Categoria
 
@@ -155,3 +159,50 @@ def perfil(request):
 def mostrar_perfil(request):
     user = request.user
     return render(request, 'usuario/mostrar_perfil.html', {'user': user})
+
+@login_required
+def carrito_prod_open(request):
+    page = get_page_number(request)
+    request.session['carrito_abierto'] = True
+    return redirect(reverse('producto') + '?page=' + str(page))
+
+@login_required
+def carrito_prod_close(request):
+    page = get_page_number(request)
+    request.session['carrito_abierto'] = False
+    return redirect(reverse('producto') + '?page=' + str(page))
+
+@login_required
+def carrito_prod_add(request, id):
+    page = get_page_number(request)
+    carritoProd = Carrito_Prod(request)
+    product = Producto.objects.get(id=id)
+
+    if product.stock - carritoProd.get_amount(product) <= 0:
+        return redirect(reverse('producto') + '?page=' + str(page))
+
+    carritoProd.add(product)
+    return redirect(reverse('producto') + '?page=' + str(page))
+
+@login_required
+def carrito_prod_substract(request, id):
+    page = get_page_number(request)
+    carritoProd = carritoProd(request)
+    product = Producto.objects.get(id=id)
+    carritoProd.substract(product)
+    return redirect(reverse('producto') + '?page=' + str(page))
+
+@login_required
+def carrito_prod_delete(request, id):
+    page = get_page_number(request)
+    carritoProd = Carrito_Prod(request)
+    product = Producto.objects.get(id=id)
+    carritoProd.delete(product)
+    return redirect(reverse('producto') + '?page=' + str(page))
+
+@login_required
+def carrito_prod_clear(request):
+    page = get_page_number(request)
+    carritoProd = Carrito_Prod(request)
+    carritoProd.clear()
+    return redirect(reverse('producto') + '?page=' + str(page))
