@@ -8,12 +8,12 @@ from django.contrib import messages
 from django.db.models import Q
 from django.urls import reverse
 
-from web.carrito_prod import Carrito_Prod
-from web.context_processor import get_page_number
+from web.carrito_prod import Carrito
+from web.context_processor import calculate_shipping, calculate_taxes, get_page_number
 from .forms import SignUpForm, CustomAuthenticationForm, ProductosForm, UserProfileForm
-from .models import Registro_cliente, Producto,Categoria
+from .models import Detalles_Pedido, Pedido, Registro_cliente, Producto,Categoria
 
-# Create your views here.
+#           vistas de la pagina
 
 def index(request):
     return render(request, 'index.html')
@@ -76,6 +76,8 @@ def login_view(request):
         form = CustomAuthenticationForm()
     return render(request, 'login.html', {'form': form})    # inicia sesion.
 
+#           CRUD de productos admin
+
 def crud(request):
     products = Producto.objects.all()
     ctx = {
@@ -121,10 +123,10 @@ def producto_add(request):
 
 @staff_member_required
 def producto_mod(request, id):
-    product = get_object_or_404(Producto, id_producto=id)
+    product = get_object_or_404(Producto, id=id)
     ctx = {
         'form': ProductosForm(instance=product),
-        'id_producto': id,
+        'id': id,
     }
     if request.method == "POST":
         form = ProductosForm(request.POST, request.FILES, instance=product)
@@ -135,9 +137,11 @@ def producto_mod(request, id):
 
 @staff_member_required
 def producto_del(request, id):
-    product = get_object_or_404(Producto, id_producto=id)
+    product = get_object_or_404(Producto, id=id)
     product.delete()
     return redirect('crud')
+
+#           Perfil del usuario
 
 @login_required
 def perfil(request):
@@ -160,49 +164,82 @@ def mostrar_perfil(request):
     user = request.user
     return render(request, 'usuario/mostrar_perfil.html', {'user': user})
 
-@login_required
+#           carrito de compras 
+
 def carrito_prod_open(request):
     page = get_page_number(request)
-    request.session['carrito_abierto'] = True
+    request.session['carrito_prod_open'] = True
     return redirect(reverse('producto') + '?page=' + str(page))
 
 @login_required
 def carrito_prod_close(request):
     page = get_page_number(request)
-    request.session['carrito_abierto'] = False
+    request.session['carrito_prod_open'] = False
     return redirect(reverse('producto') + '?page=' + str(page))
 
 @login_required
-def carrito_prod_add(request, id):
-    page = get_page_number(request)
-    carritoProd = Carrito_Prod(request)
-    product = Producto.objects.get(id=id)
-
-    if product.stock - carritoProd.get_amount(product) <= 0:
-        return redirect(reverse('producto') + '?page=' + str(page))
-
-    carritoProd.add(product)
+def agregar_producto(request, id):
+    carrito_compra = Carrito(request)
+    producto = get_object_or_404(Producto, id=id)  # Obtener el objeto Producto por su ID
+    carrito_compra.agregar(producto)  # Llamar al método agregar con el objeto Producto
+    page = request.GET.get('page', 1)
     return redirect(reverse('producto') + '?page=' + str(page))
 
 @login_required
-def carrito_prod_substract(request, id):
-    page = get_page_number(request)
-    carritoProd = carritoProd(request)
-    product = Producto.objects.get(id=id)
-    carritoProd.substract(product)
-    return redirect(reverse('producto') + '?page=' + str(page))
+def eliminar_producto(request, id):
+    carrito_compra= Carrito(request)
+    prod = Producto.objects.get(id=id)
+    carrito_compra.eliminar(prod=prod)
+    return redirect('producto')
 
 @login_required
-def carrito_prod_delete(request, id):
-    page = get_page_number(request)
-    carritoProd = Carrito_Prod(request)
-    product = Producto.objects.get(id=id)
-    carritoProd.delete(product)
-    return redirect(reverse('producto') + '?page=' + str(page))
+def restar_producto(request, id):
+    carrito_compra= Carrito(request)
+    prod = Producto.objects.get(id=id)
+    carrito_compra.restar(prod=prod)
+    return redirect('producto')
 
 @login_required
-def carrito_prod_clear(request):
-    page = get_page_number(request)
-    carritoProd = Carrito_Prod(request)
-    carritoProd.clear()
-    return redirect(reverse('producto') + '?page=' + str(page))
+def limpiar_carrito(request):
+    carrito_compra= Carrito(request)
+    carrito_compra.limpiar()
+    return redirect('producto')    
+
+
+#               Boletas
+
+login_required
+def create_order(request):
+    total = 0
+    for key, value in request.session['carrito_prod'].items():
+        total = total + int(value['precio']) * int(value['cantidad'])
+    if total <= 0:
+        return redirect('producto')
+    shipping = calculate_shipping(total)
+    taxes = calculate_taxes(total)
+    orden = Pedido(user = request.user, total = (total + shipping + taxes), shipping = shipping, taxes = taxes)
+    orden.save()
+    producto = []
+    for key, value in request.session['carrito_prod'].items():
+        producto = Producto.objects.get(id=key)
+        cantidad = value['cantidad']
+        if producto.stock - cantidad < 0:
+            continue
+        producto.stock = producto.stock - cantidad
+        subtotal = cantidad * int(producto.precio)
+        detail = Detalles_Pedido(order_id = orden, id = producto, monto = cantidad, subtotal = subtotal)
+        detail.save()
+        producto.save()
+        producto.append(detail)
+    ctx = {
+        'producto': producto,
+        'date': orden.date,
+        'total': orden.total,
+        'shipping': shipping,
+        'taxes': taxes,
+    }
+    carrito_prod = Carrito(request)
+    carrito_prod.clear()
+    return render(request, 'producto/detalle_boleta.html', ctx)
+
+

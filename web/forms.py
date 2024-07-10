@@ -23,7 +23,7 @@ class SignUpForm(UserCreationForm):
 class ProductosForm(forms.ModelForm):
     class Meta:
         model = Producto
-        fields = ['id_producto',
+        fields = ['id',
                 'nombre', 
                 'description', 
                 'precio', 
@@ -31,7 +31,7 @@ class ProductosForm(forms.ModelForm):
                 'imagen',
                 'categoria']
         labels ={
-            'id_producto' : 'ID',
+            'id' : 'ID',
             'nombre' : 'Nombre',
             'description': 'Descripción',
             'precio': 'Precio',
@@ -40,7 +40,7 @@ class ProductosForm(forms.ModelForm):
             'categoria':'Categoria',
         }
         widgets = {
-            'id_producto': forms.TextInput(
+            'id': forms.TextInput(
                 attrs={
                     'placeholder': 'Ingrese id...',
                     'id': 'id',

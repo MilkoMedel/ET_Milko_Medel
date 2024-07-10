@@ -23,13 +23,13 @@ urlpatterns = [
 
     # carrito URLs
 
-    path('carrito_prod/add/<id>', views.carrito_prod_add, name="carrito_prod_add"),
-    path('carrito_prod/substract/<id>', views.carrito_prod_substract, name="carrito_prod_substract"),
-    path('carrito_prod/delete/<id>', views.carrito_prod_delete, name="carrito_prod_delete"),
-    path('carrito_prod/clear', views.carrito_prod_clear, name="carrito_prod_clear"),
-    path('carrito_prod/open', views.carrito_prod_open, name="carrito_prod_open"),
-    path('carrito_prod/close', views.carrito_prod_close, name="carrito_prod_close"),
-
+    path('carrito_prod/add/<id>',       views.agregar_producto, name="carrito_prod_add"),
+    path('carrito_prod/substract/<id>', views.restar_producto, name="carrito_prod_substract"),
+    path('carrito_prod/delete/<id>',    views.eliminar_producto, name="carrito_prod_delete"),
+    path('carrito_prod/clear',                      views.limpiar_carrito, name="carrito_prod_clear"),
+    path('carrito_prod/open',                       views.carrito_prod_open, name="carrito_prod_open"),
+    path('carrito_prod/close',                      views.carrito_prod_close, name="carrito_prod_close"),
+    
     # restablecer contrasena urls
 
     path('accounts/password_reset/', 

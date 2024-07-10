@@ -1,58 +1,59 @@
-class Carrito_Prod:
+#  imports
+from web.models import Producto
+
+# metodos de la clase C arrito
+class Carrito:
     def __init__(self, request):
         self.request = request
         self.session = request.session
-        carrito_producto = self.session.get('carrito_producto')
-        if not carrito_producto:
-            carrito_producto = self.session['carrito_producto'] = {}
-        self.carrito_producto = carrito_producto
-
-    def add(self, producto):
-        id = str(producto.id_producto)
-        if id not in self.carrito_producto.keys():
-            self.carrito_producto[id]={
-                'id': producto.id_producto,
-                'nombre': producto.nombre,
-                'description': producto.description,
-                'precio': str(producto.precio),
-                'cantidad': 1,
-                'total': producto.total,
-                'url': producto.imagen.url,
+        carrito_prod = self.session.get("carrito_prod")
+        if not carrito_prod:
+            carrito_prod = self.session["carrito_prod"] = {}
+        self.carrito_prod=carrito_prod 
+    
+    def agregar(self, producto):
+        id = str(producto.id)
+        if id not in self.carrito_prod.keys():
+            self.carrito_prod[id]={
+                "id":producto.id, 
+                "nombre": producto.nombre,
+                "description": producto.description,
+                "precio": str (producto.precio),
+                "cantidad": 1,
+                "total": producto.precio,
+                "url": producto.imagen.url,
             }
         else:
-            self.carrito_producto[id]['cantidad'] = self.carrito_producto[id]['cantidad'] + 1
-            self.carrito_producto[id]['precio'] = producto.precio
-            self.carrito_producto[id]['total'] = self.carrito_producto[id]['total'] + producto.precio
-        self.save()
-    
-    def get_amount(self, producto):
-        id = str(producto.id_producto)
-        try:
-            return self.carrito_producto[id]['cantidad']
-        except:
-            return 0
-        
-    def save(self):
-        self.session['carrito_producto'] = self.carrito_producto
-        self.session.modified = True
+            for key, value in self.carrito_prod.items():
+                if key==producto.id:
+                    value["cantidad"] = value["cantidad"]+1
+                    value["precio"] = producto.precio
+                    value["total"]= value["total"] + producto.precio
+                    break
+        self.guardar_carrito()
 
-    def delete(self, producto):
-        id = str(producto.id_producto)
-        if id in self.carrito_producto:
-            del self.carrito_producto[id]
-            self.save()
+    def guardar_carrito(self):
+        self.session["carrito_prod"] = self.carrito_prod
+        self.session.modified=True
+
+
+    def eliminar(self, producto):
+        id = str(producto.id)
+        if id in self.carrito_prod: 
+            del self.carrito_prod[id]
+            self.guardar_carrito()
     
-    def substract(self, producto):
-        for key, value in self.carrito_producto.items():
-            if key == str(producto.id_producto):
-                value['cantidad'] = value['cantidad'] - 1
-                value['total'] = value['total'] - producto.precio
-                if value['cantidad'] < 1:
-                    self.delete(producto)
+    def restar (self,producto):
+        for key, value in self.carrito_prod.items():
+            if key == producto.id:
+                value["cantidad"] = value["cantidad"]-1
+                value["total"] = int(value["total"])- producto.precio
+                if value["cantidad"] < 1:   
+                    self.eliminar(producto)
                 break
-        self.save()
-
-    def clear(self):
-        self.session['carrito_abierto'] = False
-        self.session['carrito_producto'] = {}
-        self.session.modified = True
+        self.guardar_carrito()
+    
+    def limpiar(self):
+        self.session["carrito_prod_open"] = False
+        self.session["carrito_prod"]={}
+        self.session.modified=True 

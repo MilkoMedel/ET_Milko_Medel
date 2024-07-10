@@ -28,7 +28,7 @@ class Categoria(models.Model):
         return self.nombreCategoria
     
 class Producto(models.Model):
-    id_producto     = models.AutoField(primary_key=True)
+    id              = models.AutoField(primary_key=True)
     nombre          = models.CharField(max_length=100)
     description     = models.CharField(max_length=500)
     precio          = models.IntegerField()
