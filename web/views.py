@@ -25,6 +25,7 @@ def nosotros(request):
 @login_required
 def galeria(request):
     products = Producto.objects.all()
+
     ctx = {
         'products': products 
     }
@@ -169,13 +170,13 @@ def mostrar_perfil(request):
 def carrito_prod_open(request):
     page = get_page_number(request)
     request.session['carrito_prod_open'] = True
-    return redirect(reverse('producto') + '?page=' + str(page))
+    return redirect(reverse('galeria') + '?page=' + str(page))
 
 @login_required
 def carrito_prod_close(request):
     page = get_page_number(request)
     request.session['carrito_prod_open'] = False
-    return redirect(reverse('producto') + '?page=' + str(page))
+    return redirect(reverse('galeria') + '?page=' + str(page))
 
 @login_required
 def agregar_producto(request, id):
