@@ -207,31 +207,37 @@ def carrito_prod_close(request):
 
 @login_required
 def agregar_producto(request, id):
-    carrito_compra = Carrito(request)
-    producto = get_object_or_404(Producto, id=id)  # Obtener el objeto Producto por su ID
-    carrito_compra.agregar(producto)  # Llamar al método agregar con el objeto Producto
     page = request.GET.get('page', 1)
-    return redirect(reverse('producto') + '?page=' + str(page))
+    carrito_compra = Carrito(request)
+    producto = get_object_or_404(Producto, id=id)
+    
+    # Verificar el stock antes de agregar el producto
+    if producto.stock - carrito_compra.get_amount(producto) <= 0:
+        return redirect(reverse('producto') + '?page=' + str(page))
+    
+    carrito_compra.agregar(producto)
+    return redirect('mostrar_carrito')
+    
 
 @login_required
 def eliminar_producto(request, id):
     carrito_compra= Carrito(request)
-    prod = Producto.objects.get(id=id)
-    carrito_compra.eliminar(prod=prod)
-    return redirect('producto')
+    producto = Producto.objects.get(id=id)
+    carrito_compra.eliminar(producto=producto)
+    return redirect('mostrar_carrito')
 
 @login_required
 def restar_producto(request, id):
     carrito_compra= Carrito(request)
-    id = Producto.objects.get(id=id)
-    carrito_compra.restar(id=id)
-    return redirect('producto')
+    producto = Producto.objects.get(id=id)
+    carrito_compra.restar(producto=producto)
+    return redirect('mostrar_carrito')
 
 @login_required
 def limpiar_carrito(request):
     carrito_compra= Carrito(request)
     carrito_compra.limpiar()
-    return redirect('producto')    
+    return redirect(reverse('carrito')) 
 
 
 #               Boletas
@@ -242,32 +248,33 @@ def create_order(request):
     for key, value in request.session['carrito_prod'].items():
         total = total + int(value['precio']) * int(value['cantidad'])
     if total <= 0:
-        return redirect('producto')
+        return redirect('products')
     shipping = calculate_shipping(total)
     taxes = calculate_taxes(total)
     orden = Pedido(user = request.user, total = (total + shipping + taxes), shipping = shipping, taxes = taxes)
     orden.save()
-    producto = []
+    products = []
     for key, value in request.session['carrito_prod'].items():
-        producto = Producto.objects.get(id=key)
-        cantidad = value['cantidad']
-        if producto.stock - cantidad < 0:
+        product = Producto.objects.get(id=key)
+        amount = value['amount']
+        if product.stock - amount < 0:
             continue
-        producto.stock = producto.stock - cantidad
-        subtotal = cantidad * int(producto.precio)
-        detail = Detalles_Pedido(order_id = orden, id = producto, monto = cantidad, subtotal = subtotal)
+        product.stock = product.stock - amount
+        subtotal = amount * int(product.precio)
+        detail = Detalles_Pedido(order_id = orden, product_id = product, amount = amount, subtotal = subtotal)
         detail.save()
-        producto.save()
-        producto.append(detail)
+        product.save()
+        products.append(detail)
     ctx = {
-        'producto': producto,
+        'products': products,
         'date': orden.date,
         'total': orden.total,
         'shipping': shipping,
         'taxes': taxes,
     }
+
     carrito_prod = Carrito(request)
-    carrito_prod.clear()
+    carrito_prod.limpiar()
     return render(request, 'producto/detalle_boleta.html', ctx)
 
 

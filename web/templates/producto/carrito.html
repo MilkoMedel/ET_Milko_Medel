@@ -36,9 +36,9 @@
                         <td>${{ producto.precio }}</td>
                         <td>${{ producto.total }}</td>
                         <td>
-                            <a href="{% url 'carrito_prod_substract' producto.id %}" class="btn btn-warning">-</a>
-                            <a href="{% url 'carrito_prod_add' producto.id %}" class="btn btn-success">+</a>
-                            <a href="{% url 'carrito_prod_delete' producto.id %}" class="btn btn-danger">Eliminar</a>
+                            <a href="{% url 'carrito_prod_substract' id=key %}?page={{ page_obj.number}}" class="btn btn-warning">-</a>
+                            <a href="{% url 'carrito_prod_add' key %}" class="btn btn-success">+</a>
+                            <a href="{% url 'carrito_prod_delete' key %}" class="btn btn-danger">Eliminar</a>
                         </td>
                     </tr>
                     {% endfor %}
