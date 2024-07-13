@@ -22,29 +22,31 @@ urlpatterns = [
     path('producto/<int:id>/delete/', views.producto_del, name='producto_del'),
 
     # carrito URLs
-
-    path('carrito_prod/add/<id>',       views.agregar_producto, name="carrito_prod_add"),
+    path('carrito/', views.mostrar_carrito, name='mostrar_carrito'),
+    # Otras rutas del carrito
+    path('carrito_prod/add/<id>', views.agregar_producto, name="carrito_prod_add"),
     path('carrito_prod/substract/<id>', views.restar_producto, name="carrito_prod_substract"),
-    path('carrito_prod/delete/<id>',    views.eliminar_producto, name="carrito_prod_delete"),
-    path('carrito_prod/clear',                      views.limpiar_carrito, name="carrito_prod_clear"),
-    path('carrito_prod/open',                       views.carrito_prod_open, name="carrito_prod_open"),
-    path('carrito_prod/close',                      views.carrito_prod_close, name="carrito_prod_close"),
+    path('carrito_prod/delete/<id>', views.eliminar_producto, name="carrito_prod_delete"),
+    path('carrito_prod/clear', views.limpiar_carrito, name="carrito_prod_clear"),
+    path('carrito_prod/open', views.carrito_prod_open, name="carrito_prod_open"),
+    path('carrito_prod/close', views.carrito_prod_close, name="carrito_prod_close"),
+    path('create_order', views.create_order, name='create_order'),
     
     # restablecer contrasena urls
 
     path('accounts/password_reset/', 
         auth_views.PasswordResetView.as_view(template_name='registration/password_reset.html'), 
-        name='password_reset'),
+        name='password_reset'), 
     path('accounts/password_reset/done/', 
         auth_views.PasswordResetDoneView.as_view(template_name='accounts/password_reset_done.html'), 
         name='password_reset_done'),
     path('accounts/reset/<uidb64>/<token>/', 
         auth_views.PasswordResetConfirmView.as_view(template_name='accounts/password_reset_confirm.html'), 
-        name='password_reset_confirm'),
+        name='password_reset_confirm'), 
     path('accounts/reset/done/', 
         auth_views.PasswordResetCompleteView.as_view(template_name='accounts/password_reset_complete.html'), 
-        name='password_reset_complete'),
-    path('accounts/', include('django.contrib.auth.urls')),
+        name='password_reset_complete'), 
+    path('accounts/', include('django.contrib.auth.urls')), 
 
 ]
 

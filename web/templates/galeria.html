@@ -16,7 +16,7 @@
     <div class="title">
         <h1 class="titulo">Nuestros productos</h1>
         <div class="mb-5 d-flex justify-content-end">
-            <a href="{% url 'carrito_prod_open' %}?page={{ page_obj.number }}" class="btn btn-danger" style="background-color: #F44A36; font-size: 1rem; box-shadow: none; border-color: #F44A36;">
+            <a href="{% url 'mostrar_carrito' %}" class="btn btn-danger" style="background-color: #F44A36; font-size: 1rem; box-shadow: none; border-color: #F44A36;">
                 <i class="fa fa-shopping-cart"></i>
                 <span> {{ shopping_cart_amount }} </span>
             </a>
@@ -122,8 +122,6 @@
     </div>
 
     <!--                                          apartado del carrito de compras                                                   -->
-
-    {% include 'producto/carrito.html' %}
 
     {% include 'base/footer.html' %}
 

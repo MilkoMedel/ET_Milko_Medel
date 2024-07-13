@@ -25,7 +25,7 @@ def nosotros(request):
 @login_required
 def galeria(request):
     products = Producto.objects.all()
-
+    
     ctx = {
         'products': products 
     }
@@ -167,6 +167,15 @@ def mostrar_perfil(request):
 
 #           carrito de compras 
 
+@login_required
+def mostrar_carrito(request):
+    carrito_compra = Carrito(request)
+    context = {
+        'carrito': carrito_compra.carrito_prod,
+        'total': carrito_compra.obtener_total(),
+    }
+    return render(request, 'producto/carrito.html', context)
+
 def carrito_prod_open(request):
     page = get_page_number(request)
     request.session['carrito_prod_open'] = True
@@ -196,8 +205,8 @@ def eliminar_producto(request, id):
 @login_required
 def restar_producto(request, id):
     carrito_compra= Carrito(request)
-    prod = Producto.objects.get(id=id)
-    carrito_compra.restar(prod=prod)
+    id = Producto.objects.get(id=id)
+    carrito_compra.restar(id=id)
     return redirect('producto')
 
 @login_required
