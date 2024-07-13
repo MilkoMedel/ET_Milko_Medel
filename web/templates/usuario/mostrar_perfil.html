@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Perfil</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>PERFIL DE USUARIO</h1>
+
+        <p style="color: black; font-size: larger;"><strong>Nombre de usuario:</strong></p>
+
+        <p style="color: black; font-size: larger;">· {{ user.username | upper }}</p>
+
+        <p style="color: black; font-size: larger;"><strong>Correo:</strong></p>
+        
+        <p style="color: black; font-size: larger;">· {{ user.email | upper }}</p>
+        
+        {% if user.registro_cliente %}
+        
+            <p><strong>Género:</strong></p>
+
+            <p>· {{ user.registro_cliente.id_genero | upper }}</p>
+        
+            <p><strong>Fecha de nacimiento:</strong></p>
+
+            <p>· {{ user.registro_cliente.fecha_nac | upper }}</p>
+
+            <p><strong>Numero Telefonico:</strong></p>
+
+            <p>· +56 9 {{ user.registro_cliente.cel | upper }}</p>
+        
+        {% else %}
+        
+            <p style="color: black; font-size: larger;">No se encontraron datos de perfil.</p>
+        
+        {% endif %}
+        <a href="{% url 'perfil' %}" class="btn btn-primary">Editar</a>
+
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

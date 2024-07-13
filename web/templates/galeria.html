@@ -9,62 +9,22 @@
     <link rel="stylesheet" href="{% static 'css/styles_galeria.css' %}">
 </head>
 <body>
+
     {% include 'base/nav.html' %}
 
+    <!--                                            titulo y carrito de compras                                                         -->
     <div class="title">
         <h1 class="titulo">Nuestros productos</h1>
-        <div class="container-icon">
-            <div class="container-cart-icon">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="icon-cart"
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
-                    />
-                </svg>
-                <div class="count-products">
-                    <span id="contador-productos">0</span>
-                </div>
-            </div>
-            <div class="container-cart-products hidden-cart">
-                <div class="row-product">
-                    <div class="cart-product">
-                        <div class="info-cart-product">
-                            <span class="cantidad-producto-carrito">1</span>
-                            <p class="titulo-producto-carrito">Chapsui 500 gr</p>
-                            <span class="precio-producto-carrito">$1450</span>
-                        </div>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="icon-close"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M6 18L18 6M6 6l12 12"
-                            />
-                        </svg>
-                    </div>
-                </div>
-                <div class="cart-total hidden">
-                    <h3>Total:</h3>
-                    <span class="total-pagar">$1450</span>
-                </div>
-                <p class="cart-empty">El carrito está vacío</p>
-            </div>
+        <div class="mb-5 d-flex justify-content-end">
+            <a href="{% url 'mostrar_carrito' %}" class="btn btn-danger" style="background-color: #F44A36; font-size: 1rem; box-shadow: none; border-color: #F44A36;">
+                <i class="fa fa-shopping-cart"></i>
+                <span> {{ shopping_cart_amount }} </span>
+            </a>
         </div>
     </div>
+    
+    <!-- Apartado del buscador o categoria -->
+    
     <form action="{% url 'producto' %}" method="GET" class="form-inline mb-4">
         <input type="text" name="search" class="form-control mr-2" placeholder="Buscar por nombre..." value="{{ request.GET.search }}">
         <select name="category" class="form-control mr-2">
@@ -76,6 +36,8 @@
         <button type="submit" class="btn btn-primary" style="background-color: #F44A36; box-shadow:none; border-color: #F44A36;">Buscar</button>
     </form>
 
+    <!--                                            Apartado del producto o tarjeta                                                     -->
+    
     <div class="contenido">
         <div class="container">
             {% if page_obj %}
@@ -92,7 +54,6 @@
                                         <div class="contenedor-info">
                                             <h2>{{ producto.nombre }}</h2>
                                             <p>${{ producto.precio }}</p>
-                                            <p>{{ producto.stock }} en stock</p>
                                             <p>
                                                 Disponibilidad:
                                                 {% if producto.stock > 1 %}
@@ -104,8 +65,7 @@
                                                 {% endif %}
                                             </p>
                                             {% if producto.stock > 0 %}
-                                                <a class="btn-add-cart">Agregar al carrito</a>
-                                                <a class="btn btn-danger add-product" href="#">Añadir al carrito</a>
+                                                <a class="btn btn-danger add-product" href="{% url 'carrito_prod_add' producto.id %}?page={{ page_obj.number }}">Añadir al carrito</a>
                                             {% else %}
                                                 <a class="btn btn-outline-secondary add-product disabled" href="#">Fuera de stock</a>
                                             {% endif %}
@@ -123,6 +83,46 @@
         </div>
     </div>
 
+    <!--                                        apartado del buscar pagina                                          -->
+
+    <div class="row my-5 justify-content-center">
+        <nav aria-label="...">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link text-white bg-dark border-dark" href="?page={{ page_obj.previous_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">Anterior</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link text-secondary bg-dark border-dark">Anterior</span>
+                    </li>
+                {% endif %}
+                {% for page_number in page_obj.paginator.page_range %}
+                    {% if page_obj.number == page_number %}
+                        <li class="page-item active">
+                            <span class="page-link bg-danger border-danger">{{ page_number }}</span>
+                        </li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link bg-dark border-dark" href="?page={{ page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">{{ page_number }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link text-white bg-dark border-dark" href="?page={{ page_obj.next_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">Siguiente</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link text-secondary bg-dark border-dark">Siguiente</span>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+
+    <!--                                          apartado del carrito de compras                                                   -->
+
     {% include 'base/footer.html' %}
 
     <script>
@@ -130,6 +130,10 @@
             card.querySelector('.card-product').classList.toggle('is-flipped');
         }
     </script>
+    <script>
+        $('#cartModal').modal('show');
+    </script>
     <script src="{% static 'js/carrito.js' %}"></script>
+    <script src="{% static 'js/shoppingCart.js' %}"></script>
 </body>
 </html>
