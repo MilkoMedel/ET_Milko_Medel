@@ -24,10 +24,27 @@ def nosotros(request):
 
 @login_required
 def galeria(request):
+    search_query = request.GET.get('search', '')
+    category_query = request.GET.get('category', '')
+
     products = Producto.objects.all()
-    
+
+    if search_query:
+        products = products.filter(Q(nombre__icontains=search_query) | Q(description__icontains=search_query))
+
+    if category_query:
+        products = products.filter(categoria__nombreCategoria=category_query)
+
+    paginator = Paginator(products, 8)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    categorias = Categoria.objects.all()
+
     ctx = {
-        'products': products 
+        'page_obj': page_obj,
+        'products': products,  # Pasa también los productos sin paginar
+        'categorias': categorias,
     }
     return render(request, 'galeria.html', ctx)
 
@@ -176,6 +193,7 @@ def mostrar_carrito(request):
     }
     return render(request, 'producto/carrito.html', context)
 
+@login_required
 def carrito_prod_open(request):
     page = get_page_number(request)
     request.session['carrito_prod_open'] = True
@@ -218,7 +236,7 @@ def limpiar_carrito(request):
 
 #               Boletas
 
-login_required
+@login_required
 def create_order(request):
     total = 0
     for key, value in request.session['carrito_prod'].items():
