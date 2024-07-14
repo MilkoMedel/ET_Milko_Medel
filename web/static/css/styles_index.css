@@ -5,8 +5,8 @@
     box-sizing: border-box;
     text-decoration: none;
     list-style: none;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
+
 body, html{
     background: linear-gradient(135deg,#71b7e6,#9b59b6);
 }

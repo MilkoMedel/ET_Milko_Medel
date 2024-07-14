@@ -244,27 +244,37 @@ def limpiar_carrito(request):
 
 @login_required
 def create_order(request):
-    total = 0
-    for key, value in request.session['carrito_prod'].items():
-        total = total + int(value['precio']) * int(value['cantidad'])
+    carrito_compra = Carrito(request)
+    total = carrito_compra.obtener_total()
+
     if total <= 0:
         return redirect('producto')
+    
     estado = calculate_shipping(total)
     impuesto = calculate_taxes(total)
-    orden = Pedido(user = request.user, total = (total + estado + impuesto), estado = estado, impuesto = impuesto)
+    
+    orden = Pedido(user=request.user, total=total + estado + impuesto, estado=estado, impuesto=impuesto)
     orden.save()
+    
     products = []
-    for key, value in request.session['carrito_prod'].items():
+    for key, value in carrito_compra.carrito_prod.items():
         product = Producto.objects.get(id=key)
-        amount = value['cantidad']
-        if product.stock - amount < 0:
+        cantidad = int(value['cantidad'])
+        
+        if product.stock < cantidad:
             continue
-        product.stock = product.stock - amount
-        subtotal = amount * int(product.precio)
-        detail = Detalles_Pedido(order_id = orden, id_producto = product, monto = amount, sub_total = subtotal)
-        detail.save()
+        
+        product.stock -= cantidad
         product.save()
+        
+        subtotal = cantidad * product.precio
+        detail = Detalles_Pedido(order_id=orden, id_producto=product, monto=cantidad, sub_total=subtotal)
+        detail.save()
+        
         products.append(detail)
+    
+    carrito_compra.limpiar()
+    
     ctx = {
         'products': products,
         'date': orden.date,
@@ -273,8 +283,7 @@ def create_order(request):
         'impuesto': impuesto,
     }
 
-    carrito_prod = Carrito(request)
-    carrito_prod.limpiar()
     return render(request, 'producto/detalle_boleta.html', ctx)
+
 
 
