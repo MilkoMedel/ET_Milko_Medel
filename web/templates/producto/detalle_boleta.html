@@ -1,9 +1,4 @@
-{% extends 'base.html' %}
 {% load static %}
-
-{% block title %} 
-Nuestros productos
-{% endblock %}
 
 {% block content %}
 <link rel="stylesheet" href="{% static '/css/productos.css' %}">
@@ -24,22 +19,22 @@ Nuestros productos
                     </tr>
                 </thead>
                 <tbody>
-                    {% for product in products %}
+                    {% for product in producto %}
                     <tr class="text-white">
-                        <td class="border-dark">{{ product.product_id }}</td>
-                        <td class="border-dark">{{ product.amount }}</td>
+                        <td class="border-dark">{{ product.id }}</td>
+                        <td class="border-dark">{{ product.cantidad }}</td>
                         <td class="border-dark">${{ product.subtotal }}</td>
                     </tr>
                     {% endfor %}
                     <tr class="border-dark text-white">
                         <td class="border-dark">Costos envío</td>
                         <td class="border-dark">-</td>
-                        <td class="border-dark">${{ shipping }}</td>
+                        <td class="border-dark">${{ estado }}</td>
                     </tr>
                     <tr class="border-dark text-white">
                         <td class="border-dark">IVA</td>
                         <td class="border-dark">-</td>
-                        <td class="border-dark">${{ taxes }}</td>
+                        <td class="border-dark">${{ impuesto }}</td>
                     </tr>
                 </tbody>
             </table>

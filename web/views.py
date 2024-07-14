@@ -248,20 +248,20 @@ def create_order(request):
     for key, value in request.session['carrito_prod'].items():
         total = total + int(value['precio']) * int(value['cantidad'])
     if total <= 0:
-        return redirect('products')
-    shipping = calculate_shipping(total)
-    taxes = calculate_taxes(total)
-    orden = Pedido(user = request.user, total = (total + shipping + taxes), shipping = shipping, taxes = taxes)
+        return redirect('producto')
+    estado = calculate_shipping(total)
+    impuesto = calculate_taxes(total)
+    orden = Pedido(user = request.user, total = (total + estado + impuesto), estado = estado, impuesto = impuesto)
     orden.save()
     products = []
     for key, value in request.session['carrito_prod'].items():
         product = Producto.objects.get(id=key)
-        amount = value['amount']
+        amount = value['cantidad']
         if product.stock - amount < 0:
             continue
         product.stock = product.stock - amount
         subtotal = amount * int(product.precio)
-        detail = Detalles_Pedido(order_id = orden, product_id = product, amount = amount, subtotal = subtotal)
+        detail = Detalles_Pedido(order_id = orden, id_producto = product, monto = amount, sub_total = subtotal)
         detail.save()
         product.save()
         products.append(detail)
@@ -269,8 +269,8 @@ def create_order(request):
         'products': products,
         'date': orden.date,
         'total': orden.total,
-        'shipping': shipping,
-        'taxes': taxes,
+        'estado': estado,
+        'impuesto': impuesto,
     }
 
     carrito_prod = Carrito(request)
