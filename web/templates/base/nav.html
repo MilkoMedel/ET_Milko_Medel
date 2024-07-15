@@ -36,8 +36,8 @@
                 <li><a class="nav-link {% if request.path == nosotros_url %}active{% endif %}"
                     href="{{mostrar_perfil_url}}">Perfil</a>
                 </li>
-                <a class="dropdown-item" href="#"
-                    ><form
+                <a class="dropdown-item" href="#">
+                    <form
                     id="logout-form"
                     method="post"
                     action="{% url 'logout' %}"

@@ -24,9 +24,6 @@ urlpatterns = [
     #               carrito URLs
 
     path('carrito/', views.mostrar_carrito, name='mostrar_carrito'),
-    
-    #               Otras rutas del carrito
-
     path('carrito_prod/add/<id>', views.agregar_producto, name="carrito_prod_add"),
     path('carrito_prod/substract/<id>', views.restar_producto, name="carrito_prod_substract"),
     path('carrito_prod/delete/<id>', views.eliminar_producto, name="carrito_prod_delete"),
@@ -37,6 +34,7 @@ urlpatterns = [
     #               manejo de boletas 
 
     path('create_order', views.create_order, name='create_order'),
+    path('lista_pedidos', views.lista_pedidos, name='lista_pedidos'),
     
     #               restablecer contrasena urls
 

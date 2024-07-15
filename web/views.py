@@ -285,5 +285,9 @@ def create_order(request):
 
     return render(request, 'producto/detalle_boleta.html', ctx)
 
+#               Listar ordenes en el crud
 
-
+def lista_pedidos(request):
+    pedidos = Pedido.objects.select_related('user').prefetch_related('detalles_pedido__id_producto').order_by('-date')
+    ctx = {'pedidos': pedidos}
+    return render(request, 'producto/lista_pedidos.html', ctx)

@@ -11,6 +11,10 @@ body, html{
     background: linear-gradient(135deg,#71b7e6,#9b59b6);
 }
 
+.container {
+    max-width: 3200px;
+    margin:auto;
+}
 
 .header {
     background-image: linear-gradient(
@@ -74,56 +78,6 @@ body, html{
 
 
 
-.container.text-white.min-vh-100.p-5 {
-    background-color: #7bcbe4;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 40px;
-    margin-top: 30px;
-}
-
-.container.text-white.min-vh-100.p-5 h3 {
-    color: #ecf0f1;
-    font-size: 1.8em;
-    margin-bottom: 10px;
-}
-
-.container.text-white.min-vh-100.p-5 h6 {
-    color: #2a2a2a;
-    font-size: 1.2em;
-}
-
-.container.text-white.min-vh-100.p-5 .table {
-    background-color: #34495e;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.container.text-white.min-vh-100.p-5 .table th,
-.container.text-white.min-vh-100.p-5 .table td {
-    border-color: #2c3e50;
-    color: #ecf0f1;
-}
-
-.container.text-white.min-vh-100.p-5 .table th {
-    background-color: #e74c3c;
-    font-size: 1.1em;
-}
-
-.container.text-white.min-vh-100.p-5 .table td {
-    background-color: #34495e;
-}
-
-.container.text-white.min-vh-100.p-5 .table tr:last-child td {
-    border-bottom: none;
-}
-
-.container.text-white.min-vh-100.p-5 .d-flex.justify-content-end h5 {
-    color: #ecf0f1;
-    font-size: 1.5em;
-    margin-top: 20px;
-}
-
 
 
 
@@ -156,8 +110,100 @@ body, html{
     font-size: 20px;
     color: #FFE333;
     margin-bottom:15px;
+
 }
 
 .derechos{
     text-align: center;
 } 
+
+.container-content-aside {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn {
+    background-color: rgba(0,0,0,0.8);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+table {
+    width: 100%;
+    border: 1px solid #323337;
+}
+
+table, th, td {
+    border: 1px solid #fff;
+}
+
+thead {
+    background-color: #007bff;
+    color: white;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #fff;
+}
+
+.convertidor {
+    margin-top: 30px;
+    color: #2a2a2a;
+}
+
+#valorDolar {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+@media (max-width: 800px){
+    .menu{
+        padding: initial;
+    }
+    .menu label{
+        display: initial;
+    }
+    .menu .navbar{
+        position: absolute; 
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: #323337;
+        display: none;
+        z-index: 1000; /* Ajuste del z-index para que esté encima del slider */
+    }
+    .menu .navbar ul li {
+        width: 100%;
+    }
+    #menu:checked ~ .navbar {
+        display: initial;
+        text-align: center;
+        text-transform: uppercase;
+    }
+    .header {
+        min-height: 0vh;
+    }
+    .header-content {
+        padding: 100px 30px;
+    }
+    .header-content p {
+        padding: 0;
+    }
+    .producto{
+        display: flexbox;
+        justify-items: center;
+        max-width: 70%;
+        max-height: 20%;
+    }
+}
