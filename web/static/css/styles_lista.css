@@ -1,3 +1,4 @@
+/* Estilos generales */
 * {
     margin: 0;
     padding: 0;
@@ -7,13 +8,13 @@
     list-style: none;
 }
 
-body, html{
-    background: linear-gradient(135deg,#71b7e6,#9b59b6);
+body, html {
+    background: linear-gradient(135deg, #71b7e6, #9b59b6);
 }
 
 .container {
     max-width: 3200px;
-    margin:auto;
+    margin: auto;
 }
 
 .header {
@@ -76,20 +77,6 @@ body, html{
     display: none;
 }
 
-.producto {
-    max-width: 600px; /* Ancho máximo del carrusel */
-    margin: 50px auto; /* Centrar horizontalmente */
-    padding: 20px; /* Añadir espacio alrededor del carrusel */
-    background-color: #323337; /* Color de fondo */
-    border-radius: 20px; /* Borde redondeado */
-    box-shadow: 0 20px 20px 0;
-}
-
-.carousel-item img {
-    max-width: 100%; /* Imágenes del carrusel ajustadas */
-    height: auto;
-}
-
 .btn-1 {
     display: inline-block;
     padding: 11px 35px;
@@ -109,7 +96,7 @@ body, html{
     color: #fff;
 }
 
-.container-content{
+.container-content {
     display: flex;
     justify-content: space-between;
 }
@@ -117,13 +104,12 @@ body, html{
 .footer h3 {
     font-size: 20px;
     color: #FFE333;
-    margin-bottom:15px;
-
+    margin-bottom: 15px;
 }
 
-.derechos{
+.derechos {
     text-align: center;
-} 
+}
 
 .container-content-aside {
     background-color: #fff;
@@ -133,7 +119,7 @@ body, html{
 }
 
 .btn {
-    background-color: rgba(0,0,0,0.8);
+    background-color: rgba(0, 0, 0, 0.8);
     color: white;
     border: none;
     padding: 10px 20px;
@@ -164,54 +150,109 @@ tbody tr:nth-child(even) {
     background-color: #fff;
 }
 
-.convertidor {
-    margin-top: 30px;
-    color: #2a2a2a;
-}
-
-#valorDolar {
-    font-size: 18px;
-    font-weight: bold;
-}
-
-
-@media (max-width: 800px){
-    .menu{
+@media (max-width: 800px) {
+    .menu {
         padding: initial;
     }
-    .menu label{
+
+    .menu label {
         display: initial;
     }
-    .menu .navbar{
-        position: absolute; 
+
+    .menu .navbar {
+        position: absolute;
         top: 100%;
         left: 0;
         right: 0;
         background-color: #323337;
         display: none;
-        z-index: 1000; /* Ajuste del z-index para que esté encima del slider */
+        z-index: 1000;
     }
+
     .menu .navbar ul li {
         width: 100%;
     }
+
     #menu:checked ~ .navbar {
         display: initial;
         text-align: center;
         text-transform: uppercase;
     }
+
     .header {
         min-height: 0vh;
     }
+
     .header-content {
         padding: 100px 30px;
     }
+
     .header-content p {
         padding: 0;
     }
-    .producto{
+
+    .producto {
         display: flexbox;
         justify-items: center;
         max-width: 70%;
         max-height: 20%;
     }
+}
+
+/* Estilos para la tabla de pedidos */
+.table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: separate;
+    border-spacing: 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+}
+
+.table th, .table td {
+    padding: 15px;
+    text-align: center;
+}
+
+.table th {
+    background-color: #007bff;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.table tbody tr:hover {
+    background-color: #e6e6e6;
+}
+
+.table tbody tr td {
+    border-bottom: 1px solid #dddddd;
+}
+
+.table tfoot tr {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.progress {
+    height: 20px;
+    background-color: #e6e6e6;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.progress-bar {
+    background-color: #007bff;
+    width: 100%;
+    height: 100%;
+    transition: width 0.4s ease;
+}
+
+.img-status {
+    width: 50px;
+    height: auto;
 }

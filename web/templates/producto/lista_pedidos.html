@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>El polito y sus pedidos</title>
+    <link href="https://fonts.googleapis.com/css?family=Figtree" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/styles_lista.css' %}">
+</head>
+<body>
+    {% include 'base/nav.html' %}
+    <div id="main-content" class="container mt-5">
+        <div class="row mb-4">
+            <div class="col text-white text-center">
+                <h1>PEDIDOS REALIZADOS</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {% if pedidos %}
+                <div id="accordion">
+                    {% for pedido in pedidos %}
+                    <div class="card mb-3">
+                        <div class="card-header bg-primary text-white" data-toggle="collapse" data-target="#collapse-{{ pedido.id }}" aria-expanded="true" aria-controls="collapse-{{ pedido.id }}">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h3>Pedido #{{ pedido.id }}</h3>
+                                <h1 class="mb-0 ml-5">
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </h1>
+                            </div>
+                        </div>
+                        <div id="collapse-{{ pedido.id }}" class="collapse" data-parent="#accordion">
+                            <div class="card-body">
+                                <p><strong>Usuario:</strong> {{ pedido.user.username }}</p>
+                                <p><strong>Fecha de Pedido:</strong> {{ pedido.date }}</p>
+                                <p><strong>Detalles:</strong></p>
+                                <table class="table">
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th scope="col">Descripción</th>
+                                            <th scope="col">Producto</th>
+                                            <th scope="col">Precio</th>
+                                            <th scope="col">Cantidad</th>
+                                            <th scope="col">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for detalle in pedido.detalles_pedido.all %}
+                                        <tr>
+                                            <td>{{ detalle.id_producto.description }}</td>
+                                            <td>{{ detalle.id_producto.nombre }}</td>
+                                            <td>${{ detalle.id_producto.precio }}</td>
+                                            <td>{{ detalle.monto }}</td>
+                                            <td>${{ detalle.sub_total }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                        <tr>
+                                            <td></td>
+                                            <td>Costos de envío</td>
+                                            <td>${{ pedido.valor_envio }}</td>
+                                            <td>-</td>
+                                            <td>${{ pedido.valor_envio }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>IVA</td>
+                                            <td>${{ pedido.impuesto }}</td>
+                                            <td>-</td>
+                                            <td>${{ pedido.impuesto }}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="4" class="text-right">Total</td>
+                                            <td>${{ pedido.total }}</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                                <div class="d-flex justify-content-end">
+                                    <p class="font-weight-bold">Total: ${{ pedido.total }}</p>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="text-center">
+                                                <p class="text-center">Procesando servicios</p>
+                                            </div>
+                                            <div class="text-center">
+                                                <p class="text-center">Servicios confirmados y en espera del día</p>
+                                            </div>
+                                            <div class="text-center">
+                                                <p class="text-center">Servicios recibidos</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col">
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="{{ pedido.estado }}" aria-valuemin="0" aria-valuemax="3" style="width:100%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="text-center text-white">No hay pedidos registrados.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% include 'base/footer.html' %}
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

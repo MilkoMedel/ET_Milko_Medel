@@ -1,51 +1,61 @@
-{% extends 'base.html' %}
 {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de compra</title>
+    <link rel="stylesheet" href="{% static 'css/styles_detalle.css' %}">
+</head>
+<body>
 
-{% block title %} 
-Nuestros productos
-{% endblock %}
+    {% include 'base/nav.html' %}
 
-{% block content %}
-<link rel="stylesheet" href="{% static '/css/productos.css' %}">
+    {% block content %}
     <div class="container text-white min-vh-100 p-5">
         <div class="row mb-4">
             <div>
                 <h3>Detalle de la compra</h3>
-                <h6>Fecha de emisión {{ date }}</h6>
+                <h6>Fecha de emisión: {{ date }}</h6>
             </div>
         </div>
         <div class="row">
             <table class="table">
                 <thead>
                     <tr class="bg-danger text-white">
-                        <th class="border-danger" >Nombre de servicio</th>
-                        <th class="border-danger" >Cantidad</th>
-                        <th class="border-danger" >Subtotal</th>
+                        <th class="border-danger">Nombre de producto</th>
+                        <th class="border-danger">Cantidad</th>
+                        <th class="border-danger">Subtotal</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for product in products %}
-                    <tr class="text-white">
-                        <td class="border-dark">{{ product.product_id }}</td>
-                        <td class="border-dark">{{ product.amount }}</td>
-                        <td class="border-dark">${{ product.subtotal }}</td>
+                    <tr>
+                        <td>{{ product.id_producto.nombre }}</td>
+                        <td>{{ product.monto }}</td>
+                        <td>${{ product.sub_total }}</td>
                     </tr>
                     {% endfor %}
-                    <tr class="border-dark text-white">
-                        <td class="border-dark">Costos envío</td>
-                        <td class="border-dark">-</td>
-                        <td class="border-dark">${{ shipping }}</td>
+                    <tr>
+                        <td>Costos de envío</td>
+                        <td>-</td>
+                        <td>${{ estado }}</td>
                     </tr>
-                    <tr class="border-dark text-white">
-                        <td class="border-dark">IVA</td>
-                        <td class="border-dark">-</td>
-                        <td class="border-dark">${{ taxes }}</td>
+                    <tr>
+                        <td>IVA</td>
+                        <td>-</td>
+                        <td>${{ impuesto }}</td>
                     </tr>
                 </tbody>
             </table>
             <div class="d-flex justify-content-end">
-                <h5>Total: ${{ total }} </h5>
+                <h5>Total: ${{ total }}</h5>
             </div>
         </div>
     </div>
 {% endblock %}
+
+{% include 'base/footer.html' %}
+</body>
+</html>
+    
